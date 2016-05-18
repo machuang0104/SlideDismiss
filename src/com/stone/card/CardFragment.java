@@ -48,14 +48,14 @@ public class CardFragment extends Fragment {
 			}
 
 			@Override
-			public void onCardVanish(int index, int type) {
-				Log.d("CardFragment", "正在消失-" + dataList.get(index).userName
-						+ " 消失type=" + type);
+			public void onCardVanish(int type) {
+				// TODO Auto-generated method stub
+				
 			}
 
 			@Override
-			public void onItemClick(View cardView, int index) {
-				Log.d("CardFragment", "卡片点击-" + dataList.get(index).userName);
+			public void onItemClick(View onClickView) {
+				
 			}
 		};
 		slidePanel.setCardSwitchListener(cardSwitchListener);
