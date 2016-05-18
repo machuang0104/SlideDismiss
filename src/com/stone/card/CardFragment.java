@@ -24,7 +24,7 @@ public class CardFragment extends Fragment {
 	private CardSwitchListener cardSwitchListener;
 
 	private String imagePaths[] = { "assets://wall01.jpg",
-			"assets://wall01.jpg", "assets://wall01.jpg" }; // 24个图片资源名称
+			"assets://wall02.jpg", "assets://wall03.jpg" }; // 24个图片资源名称
 
 	private String names[] = { "郭富城", "郭富", "郭" };
 	private List<CardDataItem> dataList = new ArrayList<CardDataItem>();
