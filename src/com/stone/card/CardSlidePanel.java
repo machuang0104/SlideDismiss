@@ -148,21 +148,6 @@ public class CardSlidePanel extends ViewGroup {
 		int changeViewTop = changedView.getTop();
 //		int distance = Math.abs(changeViewTop - initCenterViewY)
 //				+ Math.abs(changeViewLeft - initCenterViewX);
-		float rate = distance / (float) MAX_SLIDE_DISTANCE_LINKAGE;
-
-		float rate1 = rate;
-		float rate2 = rate - 0.2f;
-
-		if (rate > 1) {
-			rate1 = 1;
-		}
-
-		if (rate2 < 0) {
-			rate2 = 0;
-		} else if (rate2 > 1) {
-			rate2 = 1;
-		}
-
 		// ajustLinkageViewItem(changedView, rate1, 1);
 		// ajustLinkageViewItem(changedView, rate2, 2);
 	}
@@ -193,49 +178,19 @@ public class CardSlidePanel extends ViewGroup {
 	 *            X方向上的滑动速度
 	 */
 	private void animToSide(View changedView, float xvel, float yvel) {
-		int finalX = initCenterViewX;
-		int finalY = initCenterViewY;
 		int flyType = -1;
 
 		// 1. 下面这一坨计算finalX和finalY，要读懂代码需要建立一个比较清晰的数学模型才能理解，不信拉倒
-		int dx = changedView.getLeft() - initCenterViewX;
-		int dy = changedView.getTop() - initCenterViewY;
-		if (dx == 0) {
-			// 由于dx作为分母，此处保护处理
-			dx = 1;
-		}
-		if (xvel > X_VEL_THRESHOLD || dx > X_DISTANCE_THRESHOLD) {
-			finalX = allWidth;
-			finalY = dy * (childWith + initCenterViewX) / dx + initCenterViewY;
-			flyType = DrageType.RIGHT;
-		} else if (xvel < -X_VEL_THRESHOLD || dx < -X_DISTANCE_THRESHOLD) {
-			finalX = -childWith;
-			finalY = dy * (childWith + initCenterViewX) / (-dx) + dy
-					+ initCenterViewY;
-			flyType = DrageType.LEFT;
-		}
-
-		// 如果斜率太高，就折中处理
-		if (finalY > allHeight) {
-			finalY = allHeight;
-		} else if (finalY < -allHeight / 2) {
-			finalY = -allHeight / 2;
-		}
-
-		// 如果没有飞向两侧，而是回到了中间，需要谨慎处理
-		if (finalX != initCenterViewX) {
-			releasedViewList.add(changedView);
-		}
 
 		// 2. 启动动画
-		if (mDragHelper.smoothSlideViewTo(changedView, finalX, finalY)) {
-			ViewCompat.postInvalidateOnAnimation(this);
-		}
-
-		// 3. 消失动画即将进行，listener回调
-		if (flyType >= 0 && cardSwitchListener != null) {
-			cardSwitchListener.onCardVanish(isShowing, flyType);
-		}
+//		if (mDragHelper.smoothSlideViewTo(changedView, finalX, finalY)) {
+//			ViewCompat.postInvalidateOnAnimation(this);
+//		}
+//
+//		// 3. 消失动画即将进行，listener回调
+//		if (flyType >= 0 && cardSwitchListener != null) {
+//			cardSwitchListener.onCardVanish(isShowing, flyType);
+//		}
 	}
 
 	/**
@@ -244,17 +199,13 @@ public class CardSlidePanel extends ViewGroup {
 	private void vanishOnBtnClick(int type) {
 		synchronized (obj1) {
 			View animateView = viewList.get(0);
-			if (animateView.getVisibility() != View.VISIBLE
-					|| releasedViewList.contains(animateView)) {
-				return;
-			}
 
 			int finalX = 0;
-			if (type == DrageType.LEFT) {
-				finalX = -childWith;
-			} else if (type == DrageType.RIGHT) {
-				finalX = allWidth;
-			}
+//			if (type == DrageType.LEFT) {
+//				finalX = -childWith;
+//			} else if (type == DrageType.RIGHT) {
+//				finalX = allWidth;
+//			}
 
 			if (finalX != 0) {
 				releasedViewList.add(animateView);
